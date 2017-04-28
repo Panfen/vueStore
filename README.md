@@ -1,6 +1,6 @@
 # vuestore
 
-> A Vue.js project
+> A Vue.js project. Try to develop a Mobile Commerce Market of Huizhou carved works.
 
 ## Build Setup
 
