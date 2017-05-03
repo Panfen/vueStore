@@ -31,6 +31,8 @@
       }
     },
     created () {
+      console.log(ERR_OK)
+      /*
       this.$http.get('/api/seller').then(response => {
         var res = response.body
         if (res.errno === ERR_OK) {
@@ -39,6 +41,7 @@
           console.log(res.data.name)
         }
       })
+      */
     },
     components: {
       'v-header': header
