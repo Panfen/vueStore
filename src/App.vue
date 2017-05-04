@@ -31,17 +31,12 @@
       }
     },
     created () {
-      console.log(ERR_OK)
-      /*
-      this.$http.get('/api/seller').then(response => {
-        var res = response.body
+      this.$axios.get('/api/seller').then(response => {
+        var res = response.data
         if (res.errno === ERR_OK) {
           this.seller = res.data
-          console.log('hhh')
-          console.log(res.data.name)
         }
       })
-      */
     },
     components: {
       'v-header': header
