@@ -124,10 +124,11 @@
 			height: 28px
 			line-height: 28px
 			padding: 0 22px 0 12px
-			background: rgba(0,0,0,0.2)
 			white-space: nowrap
 			overflow: hidden
 			text-overflow: ellipsis
+			position: relative
+			background: rgba(7,17,27,0.2)
 			.bulletin-title
 				display: inline-block
 				width: 22px
@@ -137,6 +138,11 @@
 			.bulletin-text
 				vertical-align: top
 				margin: 0 4px
+				font-size: 10px
+			i
+				position: absolute
+				right: 12px
+				top: 0px
 				font-size: 10px
 
 </style>
