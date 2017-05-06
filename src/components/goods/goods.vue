@@ -1,8 +1,8 @@
 <template>
 	<div class="goods">
-		<div class="menu-wrap">
+		<div class="menu-wrap" ref="menuwrapper">
 			<ul class="menu-list">
-				<li v-for="item in goods" class="menu-item">
+				<li v-for="(item, index) in goods" class="menu-item" :class="{'current' : currentIndex === index}" name="$index">
 					<span class="text">
 						<span v-show="item.type>-1" :class="classMap[item.type]" class="icon"></span>
 						{{item.name}}
@@ -10,9 +10,9 @@
 				</li>
 			</ul>
 		</div>
-		<div class="goods-wrap">
+		<div class="goods-wrap" ref="goodswrapper">
 			<ul class="goods-list">
-				<li v-for="item in goods" class="goods-item">
+				<li v-for="item in goods" class="goods-item goods-item-hook">
 					<h1 class="title">{{item.name}}</h1>
 					<ul class="foods-list">
 						<li v-for="food in item.foods" class="foods-item">
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+	import BScroll from 'better-scroll'
 	const ERR_OK = 0
 
 	export default {
@@ -48,17 +49,56 @@
 		},
 		data () {
       return {
-        goods: []
+        goods: [],
+        heightList : [],
+        scrollY : 0
       }
+    },
+    computed : {
+			currentIndex : function () {
+				for (var i = 0; i < this.heightList.length; i++) {
+					var height1 = this.heightList[i]
+					var height2 = this.heightList[i + 1]
+					if (!height2 || (this.scrollY > height1 && this.scrollY < height2)) {
+						return i
+					}
+				}
+				return 0
+			}
     },
 		created () {
       this.$axios.get('/api/goods').then(response => {
         var res = response.data
         if (res.errno === ERR_OK) {
           this.goods = res.data
+          this.$nextTick(() => {
+						this._initScroll()
+						this._calculateHeight()
+          })
         }
       })
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
+    },
+    methods : {
+			_initScroll : function () {
+				this.menuScroll = new BScroll(this.$refs.menuwrapper, {})
+				this.goodsScroll = new BScroll(this.$refs.goodswrapper, {
+					probeType : 3
+				})
+				this.goodsScroll.on('scroll', (pos) => {
+					this.scrollY = Math.abs(Math.round(pos.Y))
+				})
+			},
+			_calculateHeight : function () {
+				var foodList = this.$refs.goodswrapper.getElementsByClassName('goods-item-hook')
+				var height = 0
+				this.heightList.push(height)
+				for (var i = 0; i < foodList.length; i++) {
+					var item = foodList[i]
+					height += item.clientHeight
+					this.heightList.push(height)
+				}
+			}
     }
 	}
 </script>
@@ -84,6 +124,14 @@
 					height: 54px
 					line-height: 14px
 					margin: 0 auto
+					&.current
+						position: relative
+						z-index: 10
+						margin-top: -1px
+						background: #fff
+						font-weight: 700
+						.text
+							border-none()
 					.icon
 						display: inline-block
 						vertical-align:	top
@@ -110,7 +158,6 @@
 						font-size: 12px	
 		.goods-wrap
 			flex: 1
-			overflow: auto
 			.goods-list
 				.goods-item
 					.title
@@ -145,7 +192,7 @@
 									color: rgb(7,17,27)
 								.description
 									margin-bottom: 8px
-									line-height: 10px;
+									line-height: 12px;
 									font-size: 10px
 									color: rgb(147,153,159)
 								.extra
@@ -153,7 +200,7 @@
 									color: 10px
 									font-size: 10px
 									.sell
-										margin-right: 12px
+										margin-right: 8px
 								.price
 									font-weight: 700
 									line-height: 24px
@@ -165,6 +212,4 @@
 										text-decoration: line-through
 										font-size: 10px;
 										color: rgb(147,153,159)
-
-
 </style>

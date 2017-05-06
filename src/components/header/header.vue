@@ -28,7 +28,7 @@
   		<span class="bulletin-title"></span><span class="bulletin-text">{{seller.bulletin}}</span>
   		<i> ></i>
   	</div>
-  	<div class="background">
+  	<div class="background" mode="out-in" appear>
   		<img :src="seller.avatar" width="100%" height="100%">
   	</div>
   	<transition name="fade">
