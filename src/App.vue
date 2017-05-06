@@ -14,7 +14,6 @@
     </div>
     <router-view></router-view>
     <div class="content">
-      I am a content
     </div>
   </div>
 </template>

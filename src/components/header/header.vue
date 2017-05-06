@@ -32,7 +32,7 @@
   		<img :src="seller.avatar" width="100%" height="100%">
   	</div>
   	<transition name="fade">
-	  	<div v-show="infopageShow" class="infopage">
+	  	<div v-show="infopageShow" class="infopage" transition="fade">
 	  		<div class="infopage-wrap clearfix">
 	  			<div class="infopage-main">
 	  				<h1 class="name">{{seller.name}}</h1>
@@ -218,19 +218,18 @@
 			width: 100%
 			height: 100%
 			overflow: auto
-			transition: all 2s
+			transition: all 0.5s
 			background: rgba(7,17,27,0.8)
 			&.fade-enter-active, &.fade-leave-active
 				transition: opacity 1
 			&.fade-enter-to, &.fade-leave-to
-				transition: opacity 1
-				
+				transition: opacity 0
 			.infopage-wrap
 				width: 100%
 				min-height: 100%
 				.infopage-main
-					margin-top: 64px
-					padding-bottom: 64px
+					margin-top: 24px
+					padding-bottom: 80px
 					.name
 						line-height: 16px
 						text-align: center
