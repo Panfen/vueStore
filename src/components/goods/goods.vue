@@ -2,7 +2,7 @@
 	<div class="goods">
 		<div class="menu-wrap" ref="menuwrapper">
 			<ul class="menu-list">
-				<li v-for="(item, index) in goods" class="menu-item" :class="{'current' : currentIndex === index}" name="$index">
+				<li v-for="(item, index) in goods" class="menu-item" :class="{'current' : currentIndex === index}" v-on:click="selectMenu(index)">
 					<span class="text">
 						<span v-show="item.type>-1" :class="classMap[item.type]" class="icon"></span>
 						{{item.name}}
@@ -59,7 +59,7 @@
 				for (var i = 0; i < this.heightList.length; i++) {
 					var height1 = this.heightList[i]
 					var height2 = this.heightList[i + 1]
-					if (!height2 || (this.scrollY > height1 && this.scrollY < height2)) {
+					if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
 						return i
 					}
 				}
@@ -81,12 +81,14 @@
     },
     methods : {
 			_initScroll : function () {
-				this.menuScroll = new BScroll(this.$refs.menuwrapper, {})
+				this.menuScroll = new BScroll(this.$refs.menuwrapper, {
+					click : true
+				})
 				this.goodsScroll = new BScroll(this.$refs.goodswrapper, {
 					probeType : 3
 				})
 				this.goodsScroll.on('scroll', (pos) => {
-					this.scrollY = Math.abs(Math.round(pos.Y))
+					this.scrollY = Math.abs(Math.round(pos.y))
 				})
 			},
 			_calculateHeight : function () {
@@ -98,6 +100,11 @@
 					height += item.clientHeight
 					this.heightList.push(height)
 				}
+			},
+			selectMenu : function (index) {
+				var foodList = this.$refs.goodswrapper.getElementsByClassName('goods-item-hook')
+				var el = foodList[index]
+				this.goodsScroll.scrollToElement(el, 300)
 			}
     }
 	}
@@ -121,17 +128,17 @@
 				.menu-item
 					display: table
 					width: 56px
+					padding: 0 12px
 					height: 54px
 					line-height: 14px
 					margin: 0 auto
 					&.current
 						position: relative
 						z-index: 10
-						margin-top: -1px
 						background: #fff
 						font-weight: 700
 						.text
-							border-none()
+							border-1px(rgba(7, 17, 27, 0))
 					.icon
 						display: inline-block
 						vertical-align:	top
