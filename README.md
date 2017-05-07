@@ -2,6 +2,8 @@
 
 > A Vue.js project. Try to develop a Mobile Commerce Market of Huizhou carved works.
 
+![page](./public/page.png)
+
 ## Build Setup
 
 ``` bash
