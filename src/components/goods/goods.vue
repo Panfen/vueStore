@@ -28,6 +28,9 @@
 									<span class="now">¥{{food.price}}</span>
 									<span v-show="food.oldPrice" class="old">¥{{food.oldPrice}}</span>
 								</div>
+								<div class="cartwrap">
+									<cartctrl :food="food"></cartctrl>
+								</div>
 							</div>
 						</li>
 					</ul>
@@ -41,6 +44,7 @@
 <script>
 	import BScroll from 'better-scroll'
 	import shopcart from '@/components/shopcart/shopcart.vue'
+	import cartctrl from '@/components/cartctrl/cartctrl.vue'
 
 	const ERR_OK = 0
 
@@ -111,7 +115,8 @@
 			}
     },
     components : {
-			shopcart
+			shopcart,
+			cartctrl
     }
 	}
 </script>
