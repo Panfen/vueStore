@@ -37,7 +37,7 @@
 				</li>
 			</ul>
 		</div>
-		<shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
+		<shopcart :selectedFoods="selectedFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
 	</div>
 </template>
 
@@ -71,6 +71,17 @@
 					}
 				}
 				return 0
+			},
+			selectedFoods : function () {
+				var foods = []
+				this.goods.forEach((good) => {
+					good.foods.forEach((food) => {
+						if (food.count > 0) {
+							foods.puah(food)
+						}
+					})
+				})
+				return foods
 			}
     },
 		created () {
@@ -92,6 +103,7 @@
 					click : true
 				})
 				this.goodsScroll = new BScroll(this.$refs.goodswrapper, {
+					click : true,
 					probeType : 3
 				})
 				this.goodsScroll.on('scroll', (pos) => {
@@ -230,4 +242,10 @@
 										text-decoration: line-through
 										font-size: 10px;
 										color: rgb(147,153,159)
+								.cartwrap
+									position: absolute
+									bottom: 18px
+									right: 0px
+									text-align: right
+
 </style>
