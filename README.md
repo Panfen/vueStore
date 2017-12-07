@@ -1,6 +1,6 @@
 # vuestore
 
-> A Vue.js project. Try to develop a Mobile Commerce Market of Huizhou carved works.
+> A online food store system based on Vue.js 2.
 
 ![page](./public/page.png)
 
